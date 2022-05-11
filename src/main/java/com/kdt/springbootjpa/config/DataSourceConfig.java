@@ -46,7 +46,7 @@ public class DataSourceConfig {
                                                                        JpaProperties jpaProperties) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.kdt.springbootjpa.customer");
+        em.setPackagesToScan("com.kdt.springbootjpa.*");
         em.setJpaVendorAdapter(jpaVendorAdapter);
 
         Properties properties = new Properties();
