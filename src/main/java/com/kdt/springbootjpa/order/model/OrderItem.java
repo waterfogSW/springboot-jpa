@@ -5,11 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "order_item")
+@Getter
+@Setter
 public class OrderItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -17,9 +18,8 @@ public class OrderItem {
     private int price;
     private int quantity;
 
-    //fk
-    @Column(name = "order_id")
-    private String orderId;
-    @Column(name = "item_id")
-    private long itemId;
+    @Column(name = "order_id") // fk
+    private String order_id;
+    @Column(name = "item_id") // fk
+    private Long item_id;
 }
