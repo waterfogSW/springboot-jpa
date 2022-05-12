@@ -1,7 +1,5 @@
 package com.kdt.springbootjpa.customer.domain;
 
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

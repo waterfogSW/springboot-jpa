@@ -1,5 +1,6 @@
 package com.kdt.springbootjpa.member.model;
 
+import com.kdt.springbootjpa.common.model.BaseEntity;
 import com.kdt.springbootjpa.order.model.Order;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +9,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "member")
 @Getter
 @Setter
-public class Member {
+@Entity
+@Table(name = "member")
+public class Member extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name", nullable = false, length = 30)
@@ -31,6 +32,10 @@ public class Member {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order order) {
+        order.setMember(this);
+    }
 }
