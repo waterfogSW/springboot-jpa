@@ -7,13 +7,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order extends BaseEntity {
     @Id
     @Column(name = "id")
@@ -28,15 +29,15 @@ public class Order extends BaseEntity {
     @Lob
     private String memo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setMember(Member member) {
-        if (Objects.nonNull(this.member)) {
+        if(Objects.nonNull(this.member)) {
             this.member.getOrders().remove(this);
         }
 

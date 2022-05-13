@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,9 +27,8 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item item;
+    @OneToMany(mappedBy = "orderItem", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
 
     public void setOrder(Order order) {
         if (Objects.nonNull(this.order)) {
@@ -38,12 +39,7 @@ public class OrderItem extends BaseEntity {
         order.getOrderItems().add(this);
     }
 
-    public void setItem(Item item) {
-        if (Objects.nonNull(this.item)) {
-            this.item.getOrderItems().remove(this);
-        }
-
-        this.item = item;
-        item.getOrderItems().add(this);
+    public void addItem(Item item) {
+        item.setOrderItem(this);
     }
 }
